@@ -3,6 +3,7 @@
  * This is a PHP library that handles calling reCAPTCHA.
  *
  * @copyright Copyright (c) 2015, Google Inc.
+ *
  * @link      http://www.google.com/recaptcha
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -36,6 +37,7 @@ class Post implements RequestMethod
 {
     /**
      * URL to which requests are POSTed.
+     *
      * @const string
      */
     const SITE_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
@@ -43,7 +45,7 @@ class Post implements RequestMethod
     /**
      * Submit the POST request with the specified parameters.
      *
-     * @param RequestParameters $params Request parameters
+     * @param  RequestParameters  $params Request parameters
      * @return string Body of the reCAPTCHA response
      */
     public function submit(RequestParameters $params)
@@ -53,8 +55,8 @@ class Post implements RequestMethod
          * Using "CN_name" will still work, but it will raise deprecated errors.
          */
         $peer_key = version_compare(PHP_VERSION, '5.6.0', '<') ? 'CN_name' : 'peer_name';
-        $options = array(
-            'http' => array(
+        $options = [
+            'http' => [
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method' => 'POST',
                 'content' => $params->toQueryString(),
@@ -62,9 +64,10 @@ class Post implements RequestMethod
                 'verify_peer' => true,
                 // Force the peer validation to use www.google.com
                 $peer_key => 'www.google.com',
-            ),
-        );
+            ],
+        ];
         $context = stream_context_create($options);
+
         return file_get_contents(self::SITE_VERIFY_URL, false, $context);
     }
 }

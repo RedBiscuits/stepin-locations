@@ -3,6 +3,7 @@
  * This is a PHP library that handles calling reCAPTCHA.
  *
  * @copyright Copyright (c) 2015, Google Inc.
+ *
  * @link      http://www.google.com/recaptcha
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,28 +34,30 @@ class Response
 {
     /**
      * Succes or failure.
-     * @var boolean
+     *
+     * @var bool
      */
     private $success = false;
 
     /**
      * Error code strings.
+     *
      * @var array
      */
-    private $errorCodes = array();
+    private $errorCodes = [];
 
     /**
      * Build the response from the expected JSON returned by the service.
      *
-     * @param string $json
+     * @param  string  $json
      * @return \ReCaptcha\Response
      */
     public static function fromJson($json)
     {
         $responseData = json_decode($json, true);
 
-        if (!$responseData) {
-            return new Response(false, array('invalid-json'));
+        if (! $responseData) {
+            return new Response(false, ['invalid-json']);
         }
 
         if (isset($responseData['success']) && $responseData['success'] == true) {
@@ -71,10 +74,9 @@ class Response
     /**
      * Constructor.
      *
-     * @param boolean $success
-     * @param array $errorCodes
+     * @param  bool  $success
      */
-    public function __construct($success, array $errorCodes = array())
+    public function __construct($success, array $errorCodes = [])
     {
         $this->success = $success;
         $this->errorCodes = $errorCodes;
@@ -83,7 +85,7 @@ class Response
     /**
      * Is success?
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuccess()
     {

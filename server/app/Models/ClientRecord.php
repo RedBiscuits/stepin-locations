@@ -36,7 +36,7 @@ class ClientRecord extends Model
         'chronicInflammatoryConditionSpecification',
         'elevatedCoronaryArteryCalciumScore',
         'coronaryArteryCalciumScore',
-        'result'
+        'result',
     ];
 
     use HasFactory;

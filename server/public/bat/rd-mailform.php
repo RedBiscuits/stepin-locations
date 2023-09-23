@@ -1,6 +1,6 @@
 <?php
 
-$formConfigFile = file_get_contents("rd-mailform.config.json");
+$formConfigFile = file_get_contents('rd-mailform.config.json');
 $formConfig = json_decode($formConfigFile, true);
 
 date_default_timezone_set('Etc/UTC');
@@ -12,28 +12,30 @@ try {
 
     preg_match_all("/([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)/", $recipients, $addresses, PREG_OFFSET_CAPTURE);
 
-    if (!count($addresses[0])) {
-        die('MF001');
+    if (! count($addresses[0])) {
+        exit('MF001');
     }
 
-    function getRemoteIPAddress() {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    function getRemoteIPAddress()
+    {
+        if (! empty($_SERVER['HTTP_CLIENT_IP'])) {
             return $_SERVER['HTTP_CLIENT_IP'];
 
-        } else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        } elseif (! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
+
         return $_SERVER['REMOTE_ADDR'];
     }
 
     if (preg_match('/^(127\.|192\.168\.|::1)/', getRemoteIPAddress())) {
-        die('MF002');
+        exit('MF002');
     }
 
     $template = file_get_contents('rd-mailform.tpl');
 
     if (isset($_POST['form-type'])) {
-        switch ($_POST['form-type']){
+        switch ($_POST['form-type']) {
             case 'contact':
                 $subject = 'A message from your site visitor';
                 break;
@@ -47,44 +49,43 @@ try {
                 $subject = 'A message from your site visitor';
                 break;
         }
-    }else{
-        die('MF004');
+    } else {
+        exit('MF004');
     }
 
     if (isset($_POST['email'])) {
         $template = str_replace(
-            array("<!-- #{FromState} -->", "<!-- #{FromEmail} -->"),
-            array("Email:", $_POST['email']),
+            ['<!-- #{FromState} -->', '<!-- #{FromEmail} -->'],
+            ['Email:', $_POST['email']],
             $template);
     }
 
     if (isset($_POST['message'])) {
         $template = str_replace(
-            array("<!-- #{MessageState} -->", "<!-- #{MessageDescription} -->"),
-            array("Message:", $_POST['message']),
+            ['<!-- #{MessageState} -->', '<!-- #{MessageDescription} -->'],
+            ['Message:', $_POST['message']],
             $template);
     }
 
     // In a regular expression, the character \v is used as "anything", since this character is rare
     preg_match("/(<!-- #\{BeginInfo\} -->)([^\v]*?)(<!-- #\{EndInfo\} -->)/", $template, $matches, PREG_OFFSET_CAPTURE);
     foreach ($_POST as $key => $value) {
-        if ($key != "counter" && $key != "email" && $key != "message" && $key != "form-type" && $key != "g-recaptcha-response" && !empty($value)){
+        if ($key != 'counter' && $key != 'email' && $key != 'message' && $key != 'form-type' && $key != 'g-recaptcha-response' && ! empty($value)) {
             $info = str_replace(
-                array("<!-- #{BeginInfo} -->", "<!-- #{InfoState} -->", "<!-- #{InfoDescription} -->"),
-                array("", ucfirst($key) . ':', $value),
+                ['<!-- #{BeginInfo} -->', '<!-- #{InfoState} -->', '<!-- #{InfoDescription} -->'],
+                ['', ucfirst($key).':', $value],
                 $matches[0][0]);
 
-            $template = str_replace("<!-- #{EndInfo} -->", $info, $template);
+            $template = str_replace('<!-- #{EndInfo} -->', $info, $template);
         }
     }
 
     $template = str_replace(
-        array("<!-- #{Subject} -->", "<!-- #{SiteName} -->"),
-        array($subject, $_SERVER['SERVER_NAME']),
+        ['<!-- #{Subject} -->', '<!-- #{SiteName} -->'],
+        [$subject, $_SERVER['SERVER_NAME']],
         $template);
 
     $mail = new PHPMailer();
-
 
     if ($formConfig['useSmtp']) {
         //Tell PHPMailer to use SMTP
@@ -106,7 +107,7 @@ try {
 
         // Whether to use SMTP authentication
         $mail->SMTPAuth = true;
-        $mail->SMTPSecure = "ssl";
+        $mail->SMTPSecure = 'ssl';
 
         // Username to use for SMTP authentication
         $mail->Username = $formConfig['username'];
@@ -117,17 +118,17 @@ try {
 
     $mail->From = $_POST['email'];
 
-    # Attach file
+    // Attach file
     if (isset($_FILES['file']) &&
         $_FILES['file']['error'] == UPLOAD_ERR_OK) {
         $mail->AddAttachment($_FILES['file']['tmp_name'],
             $_FILES['file']['name']);
     }
 
-    if (isset($_POST['name'])){
+    if (isset($_POST['name'])) {
         $mail->FromName = $_POST['name'];
-    }else{
-        $mail->FromName = "Site Visitor";
+    } else {
+        $mail->FromName = 'Site Visitor';
     }
 
     foreach ($addresses[0] as $key => $value) {
@@ -139,9 +140,9 @@ try {
     $mail->MsgHTML($template);
     $mail->send();
 
-    die('MF000');
+    exit('MF000');
 } catch (phpmailerException $e) {
-    die('MF254');
+    exit('MF254');
 } catch (Exception $e) {
-    die('MF255');
+    exit('MF255');
 }

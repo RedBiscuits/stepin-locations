@@ -11,30 +11,30 @@ use Illuminate\Validation\Rule;
 class ClientRecordController extends Controller
 {
     private $healthCare = [
-        "MOH",
-        "Ministry of Defense Health Services",
-        "Ministry of Interior Medical Services",
-        "Ministry of National Guard Health Affairs",
-        "University hospitals",
-        "KFSH & RC",
-        "private healthcare sector",
-        "others"
+        'MOH',
+        'Ministry of Defense Health Services',
+        'Ministry of Interior Medical Services',
+        'Ministry of National Guard Health Affairs',
+        'University hospitals',
+        'KFSH & RC',
+        'private healthcare sector',
+        'others',
     ];
 
-    private $regions =  [
-        "Mecca Region",
-        "Riyadh Region",
-        "Eastern Region",
-        "Aseer Region",
-        "Jazan Region",
-        "Medina Region",
-        "Al-Qassim Region",
-        "Tabuk Region",
-        "Hail Region",
-        "Najran Region",
-        "Al-Jawf Region",
-        "Al-Bahah Region",
-        "Northern Borders Region",
+    private $regions = [
+        'Mecca Region',
+        'Riyadh Region',
+        'Eastern Region',
+        'Aseer Region',
+        'Jazan Region',
+        'Medina Region',
+        'Al-Qassim Region',
+        'Tabuk Region',
+        'Hail Region',
+        'Najran Region',
+        'Al-Jawf Region',
+        'Al-Bahah Region',
+        'Northern Borders Region',
     ];
 
     public function store(Request $request)
@@ -82,7 +82,7 @@ class ClientRecordController extends Controller
 
             $response = [
                 'success' => false,
-                'message' => "Validation Error",
+                'message' => 'Validation Error',
                 'data' => null,
                 'errors' => $fields->errors(),
             ];
@@ -118,11 +118,11 @@ class ClientRecordController extends Controller
             'elevatedCoronaryArteryCalciumScore' => $fields->validated()['elevatedCoronaryArteryCalciumScore'],
         ];
 
-        if ($dataToSave["historyOfPrematureMenopause"] == "Yes") {
+        if ($dataToSave['historyOfPrematureMenopause'] == 'Yes') {
             $dataToSave['historyOfPrematureMenopauseSpecification'] = $fields->validated()['historyOfPrematureMenopauseSpecification'];
         }
 
-        if ($dataToSave["chronicInflammatoryCondition"] == "Yes") {
+        if ($dataToSave['chronicInflammatoryCondition'] == 'Yes') {
             $dataToSave['chronicInflammatoryConditionSpecification'] = $fields->validated()['chronicInflammatoryConditionSpecification'];
         }
 
@@ -130,17 +130,14 @@ class ClientRecordController extends Controller
             $dataToSave['coronaryArteryCalciumScore'] = $fields->validated()['coronaryArteryCalciumScore'];
         }
 
-
-
         $age = $fields->validated()['age'];
         $totalCholesterol = $fields->validated()['totalCholesterol'];
         $hdlC = $fields->validated()['HDL'];
-        $smoker = $fields->validated()['smoker'] == "Current" ? 1 : 0;
+        $smoker = $fields->validated()['smoker'] == 'Current' ? 1 : 0;
         $diabetes = $fields->validated()['historyOfDiabetes'];
         $untreatedSystolicBP = $fields->validated()['systolicBloodPressure'];
 
-
-        if ($fields->validated()['gender'] == "Male") {
+        if ($fields->validated()['gender'] == 'Male') {
 
             $untreatedWeight = $fields->validated()['onHypertensiontreatment'] == 0 ? 1.764 : 1.797;
 
@@ -183,27 +180,27 @@ class ClientRecordController extends Controller
 
         $clientRecord = ClientRecord::create($dataToSave);
         if ($riskPercentage < 5) {
-            $category = "Low-Risk";
+            $category = 'Low-Risk';
         } elseif ($riskPercentage < 7.5) {
-            $category = "Borderline-Risk";
+            $category = 'Borderline-Risk';
         } elseif ($riskPercentage < 20) {
-            $category = "Intermediate-Risk";
+            $category = 'Intermediate-Risk';
         } else {
-            $category = "High-Risk";
+            $category = 'High-Risk';
         }
 
         Notification::create([
             'client_record_id' => $clientRecord->id,
-            'body' => "A new form was submitted on " . $clientRecord->created_at . " with ID: "
-                . $clientRecord->id .
-                " and risk score = "
-                . $riskPercentage .
+            'body' => 'A new form was submitted on '.$clientRecord->created_at.' with ID: '
+                .$clientRecord->id.
+                ' and risk score = '
+                .$riskPercentage.
                 "% \n Categorized as: "
-                . $category
+                .$category,
         ]);
 
         return response([
-            "result" => $clientRecord->result
+            'result' => $clientRecord->result,
         ], 201);
     }
 
@@ -213,8 +210,8 @@ class ClientRecordController extends Controller
 
         if ($request->has('query')) {
             $query->where(function ($q) use ($request) {
-                $q->where('centerName', 'like', '%' . $request->query('query') . '%')
-                    ->orWhere('healthcare_setting', 'like', '%' . $request->query('query') . '%');
+                $q->where('centerName', 'like', '%'.$request->query('query').'%')
+                    ->orWhere('healthcare_setting', 'like', '%'.$request->query('query').'%');
             });
         }
 
@@ -251,7 +248,7 @@ class ClientRecordController extends Controller
 
             $response = [
                 'success' => false,
-                'message' => "Validation Error",
+                'message' => 'Validation Error',
                 'data' => null,
                 'errors' => $fields->errors(),
             ];
@@ -262,11 +259,12 @@ class ClientRecordController extends Controller
         $record = ClientRecord::find($fields->validated()['id']);
         $response = [
             'success' => true,
-            'message' => "Record deleted successfully.",
+            'message' => 'Record deleted successfully.',
             'data' => null,
             'errors' => null,
         ];
         $record->delete();
-        return  response($response, 201);
+
+        return response($response, 201);
     }
 }

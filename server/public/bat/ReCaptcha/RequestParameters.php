@@ -3,6 +3,7 @@
  * This is a PHP library that handles calling reCAPTCHA.
  *
  * @copyright Copyright (c) 2015, Google Inc.
+ *
  * @link      http://www.google.com/recaptcha
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,24 +34,28 @@ class RequestParameters
 {
     /**
      * Site secret.
+     *
      * @var string
      */
     private $secret;
 
     /**
      * Form response.
+     *
      * @var string
      */
     private $response;
 
     /**
      * Remote user's IP address.
+     *
      * @var string
      */
     private $remoteIp;
 
     /**
      * Client version.
+     *
      * @var string
      */
     private $version;
@@ -58,10 +63,10 @@ class RequestParameters
     /**
      * Initialise parameters.
      *
-     * @param string $secret Site secret.
-     * @param string $response Value from g-captcha-response form field.
-     * @param string $remoteIp User's IP address.
-     * @param string $version Version of this client library.
+     * @param  string  $secret Site secret.
+     * @param  string  $response Value from g-captcha-response form field.
+     * @param  string  $remoteIp User's IP address.
+     * @param  string  $version Version of this client library.
      */
     public function __construct($secret, $response, $remoteIp = null, $version = null)
     {
@@ -78,13 +83,13 @@ class RequestParameters
      */
     public function toArray()
     {
-        $params = array('secret' => $this->secret, 'response' => $this->response);
+        $params = ['secret' => $this->secret, 'response' => $this->response];
 
-        if (!is_null($this->remoteIp)) {
+        if (! is_null($this->remoteIp)) {
             $params['remoteip'] = $this->remoteIp;
         }
 
-        if (!is_null($this->version)) {
+        if (! is_null($this->version)) {
             $params['version'] = $this->version;
         }
 

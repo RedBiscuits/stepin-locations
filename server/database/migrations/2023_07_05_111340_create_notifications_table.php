@@ -18,9 +18,9 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('client_record_id')
-            ->references('id')
-            ->on('client_records')
-            ->onDelete('cascade');
+                ->references('id')
+                ->on('client_records')
+                ->onDelete('cascade');
         });
     }
 

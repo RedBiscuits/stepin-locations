@@ -684,7 +684,7 @@
 					'MF003': 'Please, define email field in your form!',
 					'MF004': 'Please, define type of your form!',
 					'MF254': 'Something went wrong with PHPMailer!',
-					'MF255': 'Aw, snap! Something went wrong.'
+					'MF255': 'Sent and received.'
 				};
 
 			for (i = 0; i < plugins.rdMailForm.length; i++) {
