@@ -3,6 +3,7 @@
  * This is a PHP library that handles calling reCAPTCHA.
  *
  * @copyright Copyright (c) 2015, Google Inc.
+ *
  * @link      http://www.google.com/recaptcha
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,6 +39,7 @@ class SocketPost implements RequestMethod
 {
     /**
      * reCAPTCHA service host.
+     *
      * @const string
      */
     const RECAPTCHA_HOST = 'www.google.com';
@@ -59,6 +61,7 @@ class SocketPost implements RequestMethod
 
     /**
      * Socket to the reCAPTCHA service
+     *
      * @var Socket
      */
     private $socket;
@@ -66,11 +69,11 @@ class SocketPost implements RequestMethod
     /**
      * Constructor
      *
-     * @param \ReCaptcha\RequestMethod\Socket $socket optional socket, injectable for testing
+     * @param  \ReCaptcha\RequestMethod\Socket  $socket optional socket, injectable for testing
      */
     public function __construct(Socket $socket = null)
     {
-        if (!is_null($socket)) {
+        if (! is_null($socket)) {
             $this->socket = $socket;
         } else {
             $this->socket = new Socket();
@@ -80,7 +83,7 @@ class SocketPost implements RequestMethod
     /**
      * Submit the POST request with the specified parameters.
      *
-     * @param RequestParameters $params Request parameters
+     * @param  RequestParameters  $params Request parameters
      * @return string Body of the reCAPTCHA response
      */
     public function submit(RequestParameters $params)
@@ -88,23 +91,23 @@ class SocketPost implements RequestMethod
         $errno = 0;
         $errstr = '';
 
-        if (false === $this->socket->fsockopen('ssl://' . self::RECAPTCHA_HOST, 443, $errno, $errstr, 30)) {
+        if (false === $this->socket->fsockopen('ssl://'.self::RECAPTCHA_HOST, 443, $errno, $errstr, 30)) {
             return self::BAD_REQUEST;
         }
 
         $content = $params->toQueryString();
 
-        $request = "POST " . self::SITE_VERIFY_PATH . " HTTP/1.1\r\n";
-        $request .= "Host: " . self::RECAPTCHA_HOST . "\r\n";
+        $request = 'POST '.self::SITE_VERIFY_PATH." HTTP/1.1\r\n";
+        $request .= 'Host: '.self::RECAPTCHA_HOST."\r\n";
         $request .= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $request .= "Content-length: " . strlen($content) . "\r\n";
+        $request .= 'Content-length: '.strlen($content)."\r\n";
         $request .= "Connection: close\r\n\r\n";
-        $request .= $content . "\r\n\r\n";
+        $request .= $content."\r\n\r\n";
 
         $this->socket->fwrite($request);
         $response = '';
 
-        while (!$this->socket->feof()) {
+        while (! $this->socket->feof()) {
             $response .= $this->socket->fgets(4096);
         }
 

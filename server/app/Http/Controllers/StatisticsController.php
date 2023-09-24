@@ -7,10 +7,8 @@ use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class  StatisticsController extends Controller
+class StatisticsController extends Controller
 {
-
-
     public function getStatistics()
     {
         $statistics = [];
@@ -31,7 +29,7 @@ class  StatisticsController extends Controller
             'onHypertensiontreatment',
             'smoker',
             'gender',
-            'healthcare_setting'
+            'healthcare_setting',
         ];
         foreach ($columns as $column) {
             $statistics[$column] = ClientRecord::query()
@@ -51,7 +49,6 @@ class  StatisticsController extends Controller
 
         $adminCount = User::count();
 
-
         $formsCount = ClientRecord::count();
 
         $recordsPerMonth = DB::table('client_records')
@@ -64,7 +61,7 @@ class  StatisticsController extends Controller
         // Initialize the array with 0 values for each month
         $recordsPerMonthArray = array_fill(0, 12, 0);
         $notifications = Notification::orderByDesc('created_at')->get();
-                // Set the count for each month in the array
+        // Set the count for each month in the array
         foreach ($recordsPerMonth as $month => $count) {
             $recordsPerMonthArray[$month - 1] = $count;
         }
@@ -73,15 +70,16 @@ class  StatisticsController extends Controller
             'success' => true,
             'message' => 'Stats fetched.',
             'data' => [
-                "adminCount" => $adminCount,
-                "formsCount" => $formsCount,
-                "statistics" => $statistics,
-                "formsPerMonth" => $recordsPerMonthArray,
-                "risk" => $risk,
-                'notifications' =>$notifications
+                'adminCount' => $adminCount,
+                'formsCount' => $formsCount,
+                'statistics' => $statistics,
+                'formsPerMonth' => $recordsPerMonthArray,
+                'risk' => $risk,
+                'notifications' => $notifications,
             ],
-            'errors' =>  null,
+            'errors' => null,
         ];
+
         return response($response, 201);
     }
 }

@@ -18,8 +18,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $token = $request->user()->createToken(env("AUTH_TOKEN_NAME"))->plainTextToken;
-
+            $token = $request->user()->createToken(env('AUTH_TOKEN_NAME'))->plainTextToken;
 
             return response([
                 'success' => true,

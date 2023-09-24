@@ -19,9 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $htmlContent = File::get(public_path('site/index.html'));
-    return response($htmlContent)->header('Content-Type', 'text/html');
 
-    return view('welcome');
+    return response($htmlContent)->header('Content-Type', 'text/html');
 });
 
 Route::resource('location', LocationController::class);

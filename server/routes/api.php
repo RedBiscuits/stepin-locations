@@ -6,8 +6,6 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
-use App\Models\ClientRecord;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,15 +19,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 //Men (Example: 55 years of age with total cholesterol 213 mg/dL, HDL-C 50 mg/dL, untreated systolic BP 120 mm Hg, nonsmoker, and without diabetes)
 //Women (Example: 55 years of age with total cholesterol 213 mg/dL, HDL-C 50 mg/dL, untreated systolic BP 120 mm Hg, nonsmoker, and without diabetes
 Route::post('/aiSearch', [LocationController::class, 'aiSearch']);
 
-
 Route::post('/clientRecord', [ClientRecordController::class, 'store']);
-
-
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/getAdmins', [UserController::class, 'getAdmins']);
@@ -39,14 +33,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 });
 
-
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login']);
 
-
 });
-
-
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'auth'], function () {
@@ -61,6 +51,3 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
 });
-
-
-
