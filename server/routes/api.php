@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientRecordController;
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 //Men (Example: 55 years of age with total cholesterol 213 mg/dL, HDL-C 50 mg/dL, untreated systolic BP 120 mm Hg, nonsmoker, and without diabetes)
 //Women (Example: 55 years of age with total cholesterol 213 mg/dL, HDL-C 50 mg/dL, untreated systolic BP 120 mm Hg, nonsmoker, and without diabetes
-Route::post('/test', function () {
-
-});
+Route::post('/aiSearch', [LocationController::class, 'aiSearch']);
 
 Route::post('/clientRecord', [ClientRecordController::class, 'store']);
 
