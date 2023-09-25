@@ -26,6 +26,6 @@ Route::get('/', function () {
 Route::resource('location', LocationController::class);
 
 Route::get('/kimo', function () {
-    return view('welcome');
-})->name('kimo');
+    return view('gpt');
+});
 

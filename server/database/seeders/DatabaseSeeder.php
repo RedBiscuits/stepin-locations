@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         // $user->assignRole($role);
 
-        Location::factory()->count(100)->create();
+        $this->call([ LocationSeeder::class ]);
+        // Location::factory()->count(100)->create();
 
     }
 }
