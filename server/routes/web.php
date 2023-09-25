@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\IframeController;
 use App\Http\Controllers\LocationController;
-use App\Models\Iframe;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +26,3 @@ Route::resource('location', LocationController::class);
 Route::get('/kimo', function () {
     return view('welcome');
 })->name('kimo');
-

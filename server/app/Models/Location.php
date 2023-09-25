@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Location extends Model
 {
     public $fillable = ['name', 'image', 'iframe', 'country'];
+
     use HasFactory;
 }

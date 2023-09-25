@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
         //     'password' =>'123456789'
         // ]);
         // $user->assignRole($role);
-            $this->call([
-                LocationSeeder::class
-            ]);
+        $this->call([
+            LocationSeeder::class,
+        ]);
         // Location::factory()->count(100)->create();
 
     }

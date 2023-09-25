@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Location;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LocationSeeder extends Seeder
@@ -11,7 +10,6 @@ class LocationSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    
     public function run(): void
     {
 
@@ -128,8 +126,6 @@ class LocationSeeder extends Seeder
             'iframe' => 'https://my.matterport.com/show/?m=LijiMYRMRXh&play=1&tour=3&ts=3&hl=0&pin=0',
             'country' => 'Saudi Arabia',
         ]);
-        
-        
 
     }
 }
