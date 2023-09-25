@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\File;
 
 class LocationController extends Controller
 {
-
     public function index()
     {
         $locations = Location::all();
@@ -21,15 +20,15 @@ class LocationController extends Controller
         return view('create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
         $request->validate([
-            "name" => 'required|string',
+            'name' => 'required|string',
             // "image" => 'required|image|mimes:jpeg,png,jpg,gif',
-            "iframe" => 'required|string',
-            "country" => 'required|string'
+            'iframe' => 'required|string',
+            'country' => 'required|string',
         ]);
-
 
         // $dataToAdd = $request->except(['image']);
 
@@ -47,27 +46,27 @@ class LocationController extends Controller
 
     public function edit($id)
     {
-       $location =  Location::findOrFail($id);
+        $location = Location::findOrFail($id);
 
-       return view('edit', compact('location'));
+        return view('edit', compact('location'));
     }
 
-    public function update(Request $request , $id){
+    public function update(Request $request, $id)
+    {
 
         $Iframe = Location::findorFail($id);
 
         $request->validate([
-            "name" => 'required|string',
+            'name' => 'required|string',
             // "image" => 'image|mimes:jpeg,png,jpg,gif',
-            "iframe" => 'required|string',
-            "country" => 'required|string'
+            'iframe' => 'required|string',
+            'country' => 'required|string',
         ]);
 
-       
         // $dataToAdd = $request->except(['image']);
 
         // if($request->hasFile('image')){
-            
+
         //     if (File::exists($Iframe->image)) {
         //         File::delete($Iframe->image);
         //     }
@@ -79,7 +78,7 @@ class LocationController extends Controller
         //     $dataToAdd['image'] = "storage/images/iframes/".$imageName;
 
         // }
-        
+
         $Iframe->update($request->post());
 
         session()->flash('message', __('updated'));
@@ -88,9 +87,9 @@ class LocationController extends Controller
 
     }
 
+    public function destroy(Request $request, $id)
+    {
 
-    public function destroy(Request $request , $id){
-        
         $location = Location::findOrFail($id);
 
         if (File::exists($location->image)) {
@@ -105,46 +104,43 @@ class LocationController extends Controller
 
     }
 
-
     public function aiSearch(Request $request)
     {
         $request->validate([
-            "query" => 'string',
+            'query' => 'string',
         ]);
 
         $query = $request->post('query');
 
-        if(!$query){
+        if (! $query) {
 
             $locations = Location::inRandomOrder()
-            ->limit(5)
-            ->get();
-            
+                ->limit(5)
+                ->get();
+
             return $locations;
         }
 
-
-        if(str_contains($query, 'Dubai')){
+        if (str_contains($query, 'Dubai')) {
 
             $locations = Location::where('country', 'Dubai')->limit(3)->get();
 
-        } else if(str_contains($query, 'Tunisia')){
-            
-            $locations = Location::where('country', 'Tunisia')->limit(3)->get();
-        
-        } else if(str_contains($query, 'Saudi')){
-            
-            $locations = Location::where('country', 'Saudi')->limit(3)->get();
-        
-        } else {
-        
-            $locations = Location::inRandomOrder()
-            ->limit(5)
-            ->get();
-        
-        } 
-        
+        } elseif (str_contains($query, 'Tunisia')) {
 
-       return $locations;
+            $locations = Location::where('country', 'Tunisia')->limit(3)->get();
+
+        } elseif (str_contains($query, 'Saudi')) {
+
+            $locations = Location::where('country', 'Saudi')->limit(3)->get();
+
+        } else {
+
+            $locations = Location::inRandomOrder()
+                ->limit(5)
+                ->get();
+
+        }
+
+        return $locations;
     }
 }

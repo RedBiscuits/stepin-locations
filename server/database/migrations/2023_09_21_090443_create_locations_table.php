@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
+            $table->string('name');
             // $table->string("image");
-            $table->string("iframe");
-            $table->string("country");
+            $table->string('iframe');
+            $table->string('country');
             $table->timestamps();
         });
     }
