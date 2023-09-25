@@ -107,37 +107,26 @@ class LocationController extends Controller
     public function aiSearch(Request $request)
     {
         $request->validate([
-            'query' => 'string',
+            'query' => 'required|string',
         ]);
 
         $query = $request->post('query');
 
-        if (! $query) {
-
-            $locations = Location::inRandomOrder()
-                ->limit(5)
-                ->get();
-
-            return $locations;
-        }
-
         if (str_contains($query, 'Dubai')) {
 
-            $locations = Location::where('country', 'Dubai')->limit(3)->get();
+            $locations = Location::where('country', 'Dubai')->inRandomOrder()->first();
 
         } elseif (str_contains($query, 'Tunisia')) {
 
-            $locations = Location::where('country', 'Tunisia')->limit(3)->get();
+            $locations = Location::where('country', 'Tunisia')->inRandomOrder()->first();
 
         } elseif (str_contains($query, 'Saudi')) {
 
-            $locations = Location::where('country', 'Saudi')->limit(3)->get();
+            $locations = Location::where('country', 'Saudi')->inRandomOrder()->first();
 
         } else {
 
-            $locations = Location::inRandomOrder()
-                ->limit(5)
-                ->get();
+            $locations = Location::inRandomOrder()->first();
 
         }
 

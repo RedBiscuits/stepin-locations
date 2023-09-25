@@ -19,7 +19,7 @@
       <div class="typing-content">
         <div class="typing-textarea">
           <textarea id="chat-input" spellcheck="false" placeholder="Enter a prompt here" required></textarea>
-          <span id="send-btn" class="material-symbols-rounded">send</span>
+          <span id="send-btn" class="material-symbols-rounded" type="submit">send</span>
         </div>
         <div class="typing-controls">
           <span id="theme-btn" class="material-symbols-rounded">light_mode</span>

@@ -36,40 +36,43 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     const getChatResponse = async (incomingChatDiv) => {
-        const API_URL = "https://api.openai.com/v1/completions";
-        const pElement = document.createElement("p");
+        const API_URL = "/api/aiSearch";
 
         // Define the properties and data for the API request
         const requestOptions = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${API_KEY}`
             },
             body: JSON.stringify({
-                model: "text-davinci-003",
-                prompt: userText,
-                max_tokens: 2048,
-                temperature: 0.2,
-                n: 1,
-                stop: null
+                query: userText,
             })
         }
 
         // Send POST request to API, get response and set the reponse as paragraph element text
         try {
             const response = await (await fetch(API_URL, requestOptions)).json();
-            pElement.textContent = response.choices[0].text.trim();
+            const pElement = document.createElement("iframe");
+            pElement.src = response.iframe
+            pElement.width = '1100rem';
+            pElement.height = "600rem";
+            pElement.style.marginInlineStart = "5%";
+            incomingChatDiv.querySelector(".typing-animation").remove();
+            incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+            localStorage.setItem("all-chats", chatContainer.innerHTML);
+            chatContainer.scrollTo(0, chatContainer.scrollHeight);
         } catch (error) { // Add error class to the paragraph element and set error text
+            const pElement = document.createElement("iframe");
             pElement.classList.add("error");
             pElement.textContent = "Oops! Something went wrong while retrieving the response. Please try again.";
+            incomingChatDiv.querySelector(".typing-animation").remove();
+            incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
+            localStorage.setItem("all-chats", chatContainer.innerHTML);
+            chatContainer.scrollTo(0, chatContainer.scrollHeight);
         }
 
         // Remove the typing animation, append the paragraph element and save the chats to local storage
-        incomingChatDiv.querySelector(".typing-animation").remove();
-        incomingChatDiv.querySelector(".chat-details").appendChild(pElement);
-        localStorage.setItem("all-chats", chatContainer.innerHTML);
-        chatContainer.scrollTo(0, chatContainer.scrollHeight);
+        
     }
 
     const copyResponse = (copyBtn) => {
