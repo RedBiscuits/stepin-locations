@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>ChatGPT Clone in JavaScript | CodingNepal</title>
+    <title>Stepin Locations</title>
     <link rel="stylesheet" href="{{ asset('css/gptstyle.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google Fonts Link For Icons -->
@@ -13,7 +13,7 @@
   <body>
     <!-- Chats container -->
     <div class="chat-container"></div>
-    
+
     <!-- Typing container -->
     <div class="typing-container">
       <div class="typing-content">
