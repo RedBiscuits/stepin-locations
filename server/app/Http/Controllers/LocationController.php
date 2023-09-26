@@ -111,18 +111,20 @@ class LocationController extends Controller
         ]);
 
         $query = $request->post('query');
-
-        if (str_contains($query, 'Dubai')) {
+        
+        $query = strtolower($query);
+        
+        if (str_contains($query, 'dubai')) {
 
             $locations = Location::where('country', 'Dubai')->inRandomOrder()->first();
 
-        } elseif (str_contains($query, 'Tunisia')) {
+        } elseif (str_contains($query, 'tunisia')) {
 
             $locations = Location::where('country', 'Tunisia')->inRandomOrder()->first();
 
-        } elseif (str_contains($query, 'Saudi')) {
+        } elseif (str_contains($query, 'saudi')) {
 
-            $locations = Location::where('country', 'Saudi')->inRandomOrder()->first();
+            $locations = Location::where('country', 'Saudi Arabia')->inRandomOrder()->first();
 
         } else {
 
