@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LocationController;
+use App\Models\Location;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,10 @@ Route::get('/', function () {
 });
 
 Route::resource('location', LocationController::class);
+
+Route::get('location/{location}', function (Location $location) {
+    return view('locationProperety' , compact('location'));
+  });
 
 Route::get('/kimo', function () {
     return view('gpt');
