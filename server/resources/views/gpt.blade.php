@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -22,7 +21,7 @@
           <span id="send-btn" class="material-symbols-rounded" type="submit">send</span>
         </div>
         <div class="typing-controls">
-          <span id="theme-btn" class="material-symbols-rounded">light_mode</span>
+          <span id="theme-btn" class="material-symbols-rounded">mode</span>
           <span id="delete-btn" class="material-symbols-rounded">delete</span>
       </div>
     </div>

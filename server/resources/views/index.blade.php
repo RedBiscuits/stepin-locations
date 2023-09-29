@@ -8,7 +8,7 @@
         <div class="content-wrapper-before"></div>
         <div class="content-header row">
             <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">kimo</h3>
+            <h3 class="content-header-title mb-0 d-inline-block">Property</h3>
             </div>
         <div class="content-header-right col-md-4 breadcrumb-new">
         <a href="{{ route('location.create') }}"   class="mr-1 mb-1 btn btn-outline-info   float-end" style="float: inline-end;"> <i class="fas fa-plus"></i> Add Location</a>

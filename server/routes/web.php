@@ -28,7 +28,7 @@ Route::get('location/{location}', function (Location $location) {
     return view('locationProperety' , compact('location'));
   });
 
-Route::get('/kimo', function () {
+Route::get('/chat', function () {
     return view('gpt');
 });
 
