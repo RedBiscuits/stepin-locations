@@ -1,6 +1,7 @@
 # Ignore node_modules for the React app
 /node_modules
 
+
 # Ignore build and dist directories for the React app (if applicable)
 /build
 /dist
